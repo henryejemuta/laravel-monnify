@@ -86,6 +86,6 @@ return [
      *
      * ID of business wallet from which transfer will initiated.
      */
-    'wallet_id' => env('MONNIFY_WALLET_ID', 'UC92DYF58V7JZL99AE52'),
+    'wallet_id' => env('MONNIFY_WALLET_ID', '2A47114E88904626955A6BD333A6B164'),
 
 ];

@@ -102,7 +102,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         $this->oAuth2Token = $responseObject->responseBody->accessToken;
         $this->oAuth2TokenExpires = ((time() + $responseObject->responseBody->expiresIn) - 60);//Just make sure the token would not expire in 60 secs
@@ -137,7 +137,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -161,7 +161,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -202,7 +202,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -230,7 +230,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -252,7 +252,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -274,7 +274,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseMessage;
     }
@@ -313,7 +313,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -339,7 +339,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -396,7 +396,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -421,7 +421,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -447,7 +447,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -474,7 +474,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -500,7 +500,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -539,7 +539,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -582,7 +582,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -627,7 +627,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -657,7 +657,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -698,7 +698,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->initiateTransferSingle;
     }
@@ -760,7 +760,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -786,7 +786,7 @@ class Monnify
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
@@ -823,26 +823,210 @@ class Monnify
 
 
     /**
-     * @param string $authorizationCode The One Time Password sent to the specified email to be used to authenticate the transaction
      * @param string $reference The unique reference for a transaction. Also to be specified for each transaction in a bulk transaction request.
      * @param string $path
      * @return object
      *
      * @throws MonnifyFailedRequestException
-     * @link https://docs.teamapt.com/pages/viewpage.action?pageId=4587995
+     * @link https://docs.teamapt.com/display/MON/Get+Transfer+Details
      */
-    private function getSingleTransferDetails(string $reference)
+    private function getTransferDetails(string $reference, string $path)
     {
-        $endpoint = "{$this->baseUrl}{$this->v1}disbursements/single/summary?reference=$reference";
+        $endpoint = "{$this->baseUrl}{$this->v1}disbursements/$path/summary?reference=$reference";
 
         $this->withBasicAuth();
         $response = $this->httpClient->get($endpoint);
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
-            throw new MonnifyFailedRequestException($responseObject->responseMessage, $responseObject->responseCode);
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
 
         return $responseObject->responseBody;
     }
+
+
+    /**
+     * Single Transfers
+     * To get the details of a single transfer
+     *
+     * @param string $reference The unique reference for a transaction. Also to be specified for each transaction in a bulk transaction request.
+     * @return object
+     *
+     * @throws MonnifyFailedRequestException
+     * @link https://docs.teamapt.com/display/MON/Get+Transfer+Details
+     */
+    public function getSingleTransferDetails(string $reference)
+    {
+        return $this->getTransferDetails($reference, 'single');
+    }
+
+
+    /**
+     * Bulk Transfers
+     * To get the details of a bulk transfer
+     *
+     * @param string $batchReference The unique reference for a transaction. Also to be specified for each transaction in a bulk transaction request.
+     * @return object
+     *
+     * @throws MonnifyFailedRequestException
+     * @link https://docs.teamapt.com/display/MON/Get+Transfer+Details
+     */
+    public function getBulkTransferDetails(string $batchReference)
+    {
+        return $this->getTransferDetails($batchReference, 'batch');
+    }
+
+
+    /**
+     * This allows you get a paginated list of all transactions in a bulk transfer batch and their statuses.
+     *
+     * @param string $batchReference The unique reference for the entire batch of transactions being sent.
+     * @param int $pageNo A number specifying what page of transfers to be retrieved. Minimum value is 0, and defaults to 0 if not specified.
+     * @param int $pageSize A number specifying size of each transfer page. Minimum value is 1, and defaults to 10 if not specified.
+     * @return object
+     *
+     * @throws MonnifyFailedRequestException
+     * @link https://docs.teamapt.com/display/MON/Get+Bulk+Transfer+Transactions
+     */
+    public function getBulkTransferTransactions(string $batchReference, int $pageNo = 0, int $pageSize = 10)
+    {
+        $endpoint = "{$this->baseUrl}{$this->v1}disbursements/bulk/$batchReference/transactions?pageNo=$pageNo&pageSize=$pageSize";
+        $this->withBasicAuth();
+        $response = $this->httpClient->get($endpoint);
+
+        $responseObject = json_decode($response->body());
+        if (!$response->successful())
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
+
+        return $responseObject->responseBody;
+    }
+
+
+    /**
+     * This allows you get a paginated list of all transactions in a bulk transfer batch and their statuses.
+     *
+     * @param string $path
+     * @param int $pageNo A number specifying what page of transfers to be retrieved. Minimum value is 0, and defaults to 0 if not specified.
+     * @param int $pageSize A number specifying size of each transfer page. Minimum value is 1, and defaults to 10 if not specified.
+     * @return object
+     *
+     * @throws MonnifyFailedRequestException
+     * @link https://docs.teamapt.com/display/MON/List+All+Transfers
+     */
+    private function listAllTransfers(string $path, int $pageNo = 0, int $pageSize = 10)
+    {
+        $endpoint = "{$this->baseUrl}{$this->v1}disbursements/$path/transactions?pageNo=$pageNo&pageSize=$pageSize";
+
+        $this->withBasicAuth();
+        $response = $this->httpClient->get($endpoint);
+
+        $responseObject = json_decode($response->body());
+        if (!$response->successful())
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
+
+        return $responseObject->responseBody;
+    }
+
+
+    /**
+     * Single Transfers
+     * To get a list of all single transfers
+     *
+     * @param int $pageNo
+     * @param int $pageSize
+     * @return object
+     *
+     * @throws MonnifyFailedRequestException
+     * @link https://docs.teamapt.com/display/MON/Get+Transfer+Details
+     */
+    public function getSingleTransferTransactions(int $pageNo = 0, int $pageSize = 10)
+    {
+        return $this->listAllTransfers('single', $pageNo, $pageSize);
+    }
+
+
+    /**
+     * Bulk Transfers
+     * To get a list of all bulk transfers
+     *
+     * @param int $pageNo
+     * @param int $pageSize
+     * @return object
+     *
+     * @throws MonnifyFailedRequestException
+     * @link https://docs.teamapt.com/display/MON/Get+Transfer+Details
+     */
+    public function getAllBulkTransferTransactions(int $pageNo = 0, int $pageSize = 10)
+    {
+        return $this->listAllTransfers('bulk', $pageNo, $pageSize);
+    }
+
+
+    /**
+     * This allows you check if an account number is a valid NUBAN, get the account name if valid.
+     *
+     * @param MonnifyBankAccount $bankAccount
+     * @return mixed
+     * @throws MonnifyFailedRequestException
+     *
+     * @link https://docs.teamapt.com/display/MON/Validate+Bank+Account
+     */
+    public function validateBankAccount(MonnifyBankAccount $bankAccount){
+
+        $endpoint = "{$this->baseUrl}{$this->v1}disbursements/account/validate?accountNumber={$bankAccount->getAccountNumber()}&bankCode={$bankAccount->getBankCode()}";
+        $this->withBasicAuth();
+        $response = $this->httpClient->get($endpoint);
+
+        $responseObject = json_decode($response->body());
+        if (!$response->successful())
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
+
+        return $responseObject->responseBody;
+    }
+
+
+    /**
+     * This allows you to get the available balance in your monnify wallet.
+     *
+     * @return mixed
+     * @throws MonnifyFailedRequestException
+     *
+     * @link https://docs.teamapt.com/display/MON/Get+Wallet+Balance
+     */
+    public function getWalletBalance(){
+        $endpoint = "{$this->baseUrl}{$this->v1}disbursements/wallet-balance?walletId={$this->config['wallet_id']}";
+        $this->withBasicAuth();
+        $response = $this->httpClient->get($endpoint);
+
+        $responseObject = json_decode($response->body());
+        if (!$response->successful())
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
+
+        return $responseObject->responseBody;
+    }
+
+
+    /**
+     * This allows you to resend OTP for 2FA
+     *
+     * @param string $reference
+     * @return mixed
+     * @throws MonnifyFailedRequestException
+     * @link https://docs.teamapt.com/display/MON/Resend+OTP
+     */
+    public function resendOTP(string $reference){
+        $endpoint = "{$this->baseUrl}{$this->v1}disbursements/single/resend-otp";
+        $this->withBasicAuth();
+        $response = $this->httpClient->post($endpoint, [
+            'reference' => $reference
+        ]);
+
+        $responseObject = json_decode($response->body());
+        if (!$response->successful())
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
+
+        return $responseObject->responseBody;
+    }
+
 
 }
