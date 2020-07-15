@@ -22,10 +22,24 @@ You can install the package via composer:
 composer require henryejemuta/laravel-monnify
 ```
 
+Publish Monnify configuration file as well as set default details in .env file:
+
+```bash
+php artisan monnify:init
+```
+
 ## Usage
 
 ``` php
-// Usage description here
+// Usage description incomplete
+//Import Monnify Facade for use within your application
+use HenryEjemuta\LaravelMonnify\Facades\Monnify;
+
+//
+$responseBody = Monnify::createSubAccount('058', '0221097794', 'johndoe@example.com');
+$responseBody = Monnify::deleteSubAccount('MFY_SUB_683712752381');
+$responseBody = Monnify::getSubAccounts();
+$responseBody = Monnify::getBanksWithUSSDShortCode();
 ```
 
 ### Testing
