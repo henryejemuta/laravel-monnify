@@ -1,0 +1,58 @@
+{
+  "name": "henryejemuta/laravel-monnify",
+  "description": "A laravel package to seamlessly integrate monnify api within your laravel application",
+  "keywords": [
+    "laravel",
+    "monnify",
+    "payment",
+    "card payment",
+    "bank transfer"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Henry Ejemuta",
+      "email": "henry.ejemuta@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "illuminate/support": "^6.0|^7.0",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^5.3",
+    "phpunit/phpunit": "^9.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "HenryEjemuta\\LaravelMonnify\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "HenryEjemuta\\LaravelMonnify\\Tests\\": "tests"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "test-f": "vendor/bin/phpunit --filter"
+
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "HenryEjemuta\\LaravelMonnify\\LaravelMonnifyServiceProvider"
+      ],
+      "aliases": {
+        "Monnify": "HenryEjemuta\\LaravelMonnify\\Facades\\Monnify"
+      }
+    }
+  }
+}
