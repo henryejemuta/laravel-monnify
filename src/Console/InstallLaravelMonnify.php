@@ -45,7 +45,7 @@ class InstallLaravelMonnify extends Command
             $this->writeChanges($path, "MONNIFY_API_KEY", "api_key", "MK_TEST_SAF7HR5F3F");
             $this->writeChanges($path, "MONNIFY_SECRET_KEY", "secret_key", "4SY6TNL8CK3VPRSBTHTRG2N8XXEGC6NL");
             $this->writeChanges($path, "MONNIFY_CONTRACT_CODE", "contract_code", "4934121686");
-            $this->writeChanges($path, "MONNIFY_WALLET_ID", "wallet_id", "UC92DYF58V7JZL99AE52");
+            $this->writeChanges($path, "MONNIFY_WALLET_ID", "wallet_id", "2A47114E88904626955A6BD333A6B164");
             $this->writeChanges($path, "MONNIFY_DEFAULT_SPLIT_PERCENTAGE", "default_split_percentage", 20);
             $this->writeChanges($path, "MONNIFY_DEFAULT_CURRENCY_CODE", "default_currency_code", 'NGN');
             $this->writeChanges($path, "MONNIFY_DEFAULT_PAYMENT_REDIRECT_URL", "redirect_url", '"${APP_URL}"');

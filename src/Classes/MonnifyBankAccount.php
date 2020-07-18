@@ -26,21 +26,21 @@ class MonnifyBankAccount
      * @param string $bankCode
      * @throws MonnifyInvalidParameterException
      */
-    private function __construct(string $accountName, string $accountNumber, string $bankCode)
+    public function __construct(string $accountNumber, string $bankCode, string $accountName = '')
     {
         $accountNumber = trim($accountNumber);
         $bankCode = trim($bankCode);
 
         if (empty($accountNumber))
             throw new MonnifyInvalidParameterException('Account Number can\'t be empty');
-        else if (is_numeric($accountNumber))
+        else if (preg_match('#[^0-9]#', $accountNumber))
             throw new MonnifyInvalidParameterException('Account Number must be numeric');
-        else if (strlen("{$bankCode}") !== 10)
+        else if (strlen("{$accountNumber}") !== 10)
             throw new MonnifyInvalidParameterException('Account Number must be exactly 10 digits');
 
         if (empty($bankCode))
             throw new MonnifyInvalidParameterException('Bank Code can\'t be empty');
-        else if (is_numeric($bankCode))
+        else if (preg_match('#[^0-9]#', $bankCode))
             throw new MonnifyInvalidParameterException('Bank Code must be numeric');
         else if (strlen("{$bankCode}") !== 3)
             throw new MonnifyInvalidParameterException('Bank Code must be exactly 3 digits');
