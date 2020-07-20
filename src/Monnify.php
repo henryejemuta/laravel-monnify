@@ -562,12 +562,12 @@ class Monnify
      * @throws MonnifyFailedRequestException
      * @link https://docs.teamapt.com/display/MON/Initialize+Transaction
      */
-    public function initializeTransaction(float $amount, string $customerName, string $customerEmail, string $paymentReference, string $paymentDescription, string $redirectUrl, MonnifyPaymentMethods $monnifyPaymentMethods, MonnifyIncomeSplitConfig $incomeSplitConfig, string $currencyCode = null)
+    public function initializeTransaction(float $amount, string $customerName, string $customerEmail, string $paymentReference, string $paymentDescription, string $redirectUrl, MonnifyPaymentMethods $monnifyPaymentMethods, MonnifyIncomeSplitConfig $incomeSplitConfig = null, string $currencyCode = null)
     {
         $endpoint = "{$this->baseUrl}{$this->v1}merchant/transactions/init-transaction";
 
         $this->withBasicAuth();
-        $response = $this->httpClient->post($endpoint, [
+        $formData = [
             "amount" => $amount,
             "customerName" => trim($customerName),
             "customerEmail" => $customerEmail,
@@ -577,8 +577,11 @@ class Monnify
             "contractCode" => $this->config['contract_code'],
             "redirectUrl" => trim($redirectUrl),
             "paymentMethods" => $monnifyPaymentMethods->toArray(),
-            "incomeSplitConfig" => $incomeSplitConfig->toArray()
-        ]);
+        ];
+        if ($incomeSplitConfig !== null)
+            $formData["incomeSplitConfig"] = $incomeSplitConfig->toArray();
+
+        $response = $this->httpClient->post($endpoint, $formData);
 
         $responseObject = json_decode($response->body());
         if (!$response->successful())
@@ -971,7 +974,8 @@ class Monnify
      *
      * @link https://docs.teamapt.com/display/MON/Validate+Bank+Account
      */
-    public function validateBankAccount(MonnifyBankAccount $bankAccount){
+    public function validateBankAccount(MonnifyBankAccount $bankAccount)
+    {
 
         $endpoint = "{$this->baseUrl}{$this->v1}disbursements/account/validate?accountNumber={$bankAccount->getAccountNumber()}&bankCode={$bankAccount->getBankCode()}";
         $this->withBasicAuth();
@@ -993,7 +997,8 @@ class Monnify
      *
      * @link https://docs.teamapt.com/display/MON/Get+Wallet+Balance
      */
-    public function getWalletBalance(){
+    public function getWalletBalance()
+    {
         $endpoint = "{$this->baseUrl}{$this->v1}disbursements/wallet-balance?walletId={$this->config['wallet_id']}";
         $this->withBasicAuth();
         $response = $this->httpClient->get($endpoint);
@@ -1014,7 +1019,8 @@ class Monnify
      * @throws MonnifyFailedRequestException
      * @link https://docs.teamapt.com/display/MON/Resend+OTP
      */
-    public function resendOTP(string $reference){
+    public function resendOTP(string $reference)
+    {
         $endpoint = "{$this->baseUrl}{$this->v1}disbursements/single/resend-otp";
         $this->withBasicAuth();
         $response = $this->httpClient->post($endpoint, [

@@ -48,7 +48,7 @@ class InstallLaravelMonnify extends Command
             $this->writeChanges($path, "MONNIFY_WALLET_ID", "wallet_id", "2A47114E88904626955A6BD333A6B164");
             $this->writeChanges($path, "MONNIFY_DEFAULT_SPLIT_PERCENTAGE", "default_split_percentage", 20);
             $this->writeChanges($path, "MONNIFY_DEFAULT_CURRENCY_CODE", "default_currency_code", 'NGN');
-            $this->writeChanges($path, "MONNIFY_DEFAULT_PAYMENT_REDIRECT_URL", "redirect_url", '"${APP_URL}"');
+            $this->writeChanges($path, "MONNIFY_DEFAULT_PAYMENT_REDIRECT_URL", "redirect_url", '"${APP_URL}/transaction/confirm"');
 
         }
 
