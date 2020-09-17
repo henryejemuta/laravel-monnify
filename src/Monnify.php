@@ -610,6 +610,12 @@ class Monnify
         return hash('sha512', "$clientSK|$paymentReference|$amountPaid|$paidOn|$transactionReference");
     }
 
+    public function calculateTransactionHashFix(string $paymentReference, $amountPaid, string $paidOn, string $transactionReference)
+    {
+        $clientSK = $this->config['secret_key'];
+        return hash('sha512', "$clientSK|$paymentReference|$amountPaid|$paidOn|$transactionReference");
+    }
+
 
     /**
      * We highly recommend that when you receive a notification from us, even after checking to ensure the hash values match,
