@@ -37,6 +37,15 @@ class LaravelMonnifyServiceProvider extends ServiceProvider
             $this->commands([
                 InstallLaravelMonnify::class,
             ]);
+
+            if (!class_exists('CreateWebHookCallsTable')) {
+                $this->publishes([
+                    __DIR__ . '/database/migrations/create_web_hook_calls_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_web_hook_calls_table.php'),
+                    // you can add any number of migrations here
+                ], 'migrations');
+            }
+
+            $this->loadRoutesFrom(__DIR__.'routes/web.php');
         }
     }
 
@@ -50,8 +59,7 @@ class LaravelMonnifyServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'monnify');
 
-        $this->app->singleton('monnify', function($app)
-        {
+        $this->app->singleton('monnify', function ($app) {
             $baseUrl = config('monnify.base_url');
             $instanceName = 'monnify';
 

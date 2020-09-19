@@ -56,7 +56,7 @@ class CalculateTransactionHashTest extends TestCase
     },
     "metaData": {}
 }';
-    public  $config = [
+    public $config = [
         'base_url' => "https://sandbox.monnify.com",
         'api_key' => "MK_TEST_SAF7HR5F3F",
         'secret_key' => "4SY6TNL8CK3VPRSBTHTRG2N8XXEGC6NL",
@@ -73,7 +73,7 @@ class CalculateTransactionHashTest extends TestCase
      */
     public function fakeMonnifyClass(): Monnify
     {
-        return new Monnify($this->config['base_url'], 'monnify',$this->config);
+        return new Monnify($this->config['base_url'], 'monnify', $this->config);
 
     }
 
@@ -81,25 +81,13 @@ class CalculateTransactionHashTest extends TestCase
     /**
      *Run the test against the default calculateTransactionHash implemented in the Monnify Class, THIS TEST WOULD FAIL!
      */
-    public function testcalculateTransactionHash(): void
+    public function testCalculateTransactionHash(): void
     {
-        $payload = json_decode($this->payload,false);
+        $payload = json_decode($this->payload, false);
         self::assertIsObject($payload);
         $payloadHash = $payload->transactionHash;
         $computedHash = $this->fakeMonnifyClass()->calculateTransactionHash($payload->paymentReference, $payload->amountPaid, $payload->paidOn, $payload->transactionReference);
-        self::assertSame($payloadHash,$computedHash);
-    }
-
-    /**
-     *Run the test against the proposed change to the  calculateTransactionHash , THIS TEST WOULD SUCCEED!
-     */
-    public function testcalculateTransactionHashfix(): void
-    {
-        $payload = json_decode($this->payload,false);
-        self::assertIsObject($payload);
-        $payloadHash = $payload->transactionHash;
-        $computedHash = $this->fakeMonnifyClass()->calculateTransactionHashFix($payload->paymentReference, $payload->amountPaid, $payload->paidOn, $payload->transactionReference);
-        self::assertSame($payloadHash,$computedHash);
+        self::assertSame($payloadHash, $computedHash);
     }
 
 }
