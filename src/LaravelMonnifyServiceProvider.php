@@ -45,7 +45,7 @@ class LaravelMonnifyServiceProvider extends ServiceProvider
                 ], 'migrations');
             }
 
-            $this->loadRoutesFrom(__DIR__.'routes/web.php');
+            $this->loadRoutesFrom(__DIR__.'/routes/web.php');
         }
     }
 

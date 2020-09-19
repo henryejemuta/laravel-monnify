@@ -31,6 +31,15 @@ class InstallLaravelMonnify extends Command
 
         $this->info('Configuration Published!');
 
+        $this->info('Publishing migrations...');
+
+        $this->call('vendor:publish', [
+            '--provider' => "HenryEjemuta\LaravelMonnify\LaravelMonnifyServiceProvider",
+            '--tag' => "migrations"
+        ]);
+
+        $this->info('Migrations Published!');
+
         $this->info('Checking for environmental variable file (.env)');
         if (file_exists($path = $this->envPath()) === false) {
             $this->info('Environmental variable file (.env) not found!');

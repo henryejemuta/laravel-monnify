@@ -24,18 +24,12 @@ You can install the package via composer:
 composer require henryejemuta/laravel-monnify
 ```
 
-Publish Monnify configuration file as well as set default details in .env file:
+Publish Monnify configuration file, migrations as well as set default details in .env file:
 
 ```bash
 php artisan monnify:init
 ```
 
-
-To Publish webhook call log migration run the command below:
-
-```bash
-php artisan vendor:publish --provider="HenryEjemuta\LaravelMonnify\LaravelMonnifyServiceProvider" --tag="migrations"
-```
 
 ## Usage
 > To use the monnify package you must import the Monnify Facades with the import statement below; Other Classes import is based on your specific usage and would be highlighted in their corresponding sections.
