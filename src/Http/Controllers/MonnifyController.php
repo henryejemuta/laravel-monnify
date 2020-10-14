@@ -13,11 +13,9 @@ namespace HenryEjemuta\LaravelMonnify\Http\Controllers;
 
 
 use HenryEjemuta\LaravelMonnify\Events\NewWebHookCallReceived;
-use HenryEjemuta\LaravelMonnify\Facades\Monnify;
 use HenryEjemuta\LaravelMonnify\Models\WebHookCall;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Log;
 
 class MonnifyController extends Controller
 {
@@ -26,7 +24,7 @@ class MonnifyController extends Controller
      * Receive a webhook call from monnify and validate the transaction hash, then dispatch an event if the hash is valid else just ignore
      * @param Request $request
      */
-    public function webhook(Request $request):void
+    public function webhook(Request $request): void
     {
         $validatedPayload = $request->validate([
             'transactionReference' => 'required',
@@ -42,7 +40,7 @@ class MonnifyController extends Controller
         ]);
 
 //        Log::info(print_r($validatedPayload, true));
-        $webHookCall = new WebHookCall($validatedPayload);
+        $webHookCall = new WebHookCall($request->all());
 
         event(new NewWebHookCallReceived($webHookCall));
 //        $calculatedHash = Monnify::calculateTransactionHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
