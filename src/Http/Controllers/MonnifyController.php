@@ -41,15 +41,18 @@ class MonnifyController extends Controller
             'paymentMethod' => 'required',
         ]);
 
-        Log::info(print_r($validatedPayload, true));
-        $calculatedHash = Monnify::calculateTransactionHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
-        if ($calculatedHash == $validatedPayload['transactionHash']) {
-            $webHookCall = new WebHookCall($validatedPayload);
+//        Log::info(print_r($validatedPayload, true));
+        $webHookCall = new WebHookCall($validatedPayload);
 
-            event(new NewWebHookCallReceived($webHookCall));
-
-//            $transaction = Monnify::getTransactionStatus($validatedPayload['transactionReference']);
-
-        }
+        event(new NewWebHookCallReceived($webHookCall));
+//        $calculatedHash = Monnify::calculateTransactionHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
+//        if ($calculatedHash == $validatedPayload['transactionHash']) {
+//            $webHookCall = new WebHookCall($validatedPayload);
+//
+//            event(new NewWebHookCallReceived($webHookCall));
+//
+////            $transaction = Monnify::getTransactionStatus($validatedPayload['transactionReference']);
+//
+//        }
     }
 }

@@ -31,6 +31,23 @@ php artisan monnify:init
 ```
 
 
+## Laravel Monnify Webhook Event
+To handle Monnify Webhook notification the Laravel Monnify already include the webhook endpoint `YOUR_DOMAIN/laravel-monnify/webhook`, replace `YOUR_DOMAIN` with your server url
+
+- Log on to your [Monnify Dashboard Setting](https://app.monnify.com/settings), select **API Keys & Webhooks** and set your webhook to `YOUR_DOMAIN/laravel-monnify/webhook`
+
+
+`php artisan make:listener MonnifyNotificationListener -e NewWebHookCallReceived`
+Look up Monnify API Documentation.
+
+Laravel Monnify Webhook Event
+
+```bash
+php artisan monnify:init
+```
+/laravel-monnify/webhook
+
+
 ## Usage
 > To use the monnify package you must import the Monnify Facades with the import statement below; Other Classes import is based on your specific usage and would be highlighted in their corresponding sections.
 > You'll also need to import the MonnifyFailedRequestException and handle the exception as all failed request will throw this exception the with the corresponding monnify message and code [Learn More](https://docs.teamapt.com/display/MON/Transaction+Responses)
