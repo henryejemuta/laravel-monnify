@@ -20,8 +20,8 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^7.2",
-    "laravel/framework": "^8.0 || ^7.0",
-    "guzzlehttp/guzzle": "^7.0.1",
+    "illuminate/support": "^7.0|^8.0",
+    "guzzlehttp/guzzle": "^7.0",
     "ext-json": "*"
   },
   "require-dev": {

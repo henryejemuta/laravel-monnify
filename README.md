@@ -1,6 +1,6 @@
 # Laravel Monnify
 
-[![Build Status](https://travis-ci.org/orobogenius/sansdaemon.svg?branch=master)](https://travis-ci.org/orobogenius/sansdaemon)
+[![Build Status](https://travis-ci.org/henryejemuta/laravel-monnify.svg?branch=master)](https://travis-ci.org/henryejemuta/laravel-monnify)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/henryejemuta/laravel-monnify.svg?style=flat-square)](https://packagist.org/packages/henryejemuta/laravel-monnify)
 [![Latest Stable Version](https://poser.pugx.org/henryejemuta/laravel-monnify/v/stable)](https://packagist.org/packages/henryejemuta/laravel-monnify)
 [![Total Downloads](https://poser.pugx.org/henryejemuta/laravel-monnify/downloads)](https://packagist.org/packages/henryejemuta/laravel-monnify)

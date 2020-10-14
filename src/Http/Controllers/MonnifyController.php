@@ -17,6 +17,7 @@ use HenryEjemuta\LaravelMonnify\Facades\Monnify;
 use HenryEjemuta\LaravelMonnify\Models\WebHookCall;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 
 class MonnifyController extends Controller
 {
@@ -40,6 +41,7 @@ class MonnifyController extends Controller
             'paymentMethod' => 'required',
         ]);
 
+        Log::info(print_r($validatedPayload, true));
         $calculatedHash = Monnify::calculateTransactionHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
         if ($calculatedHash == $validatedPayload['transactionHash']) {
             $webHookCall = new WebHookCall($validatedPayload);
