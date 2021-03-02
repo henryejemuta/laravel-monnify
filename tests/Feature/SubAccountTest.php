@@ -26,7 +26,7 @@ class SubAccountTest extends TestCase
     public function testGetSubAccountsTest()
     {
         try {
-            Monnify::getSubAccounts();
+            Monnify::SubAccounts()->getSubAccounts();
             $this->assertTrue(true);
         } catch (MonnifyFailedRequestException $exception) {
             $this->assertTrue(true, $exception->getMessage());
@@ -41,7 +41,7 @@ class SubAccountTest extends TestCase
     public function testDeleteSubAccountTest()
     {
         try {
-            $response = Monnify::deleteSubAccount('MFY_SUB_683712752381');
+            $response = Monnify::SubAccounts()->deleteSubAccount('MFY_SUB_683712752381');
             $this->assertJson($response);
         } catch (MonnifyFailedRequestException $exception) {
             $this->assertTrue(true, $exception->getMessage());
@@ -56,7 +56,7 @@ class SubAccountTest extends TestCase
     public function testCreateSubAccountTest()
     {
         try {
-            $response = Monnify::createSubAccount('058', '0221097794', 'johndoe@example.com');
+            $response = Monnify::SubAccounts()->createSubAccount('058', '0221097794', 'johndoe@example.com');
             $this->assertTrue(true);
         } catch (MonnifyFailedRequestException $exception) {
             $this->assertTrue(true, $exception->getMessage());

@@ -20,8 +20,10 @@ class NewWebHookCallReceived
     use Dispatchable, SerializesModels;
 
     public $webHookCall;
+    public $isValidTransactionHash;
 
-    public function __construct(WebHookCall $webHookCall) {
+    public function __construct(WebHookCall $webHookCall, bool $isValidTransactionHash) {
         $this->webHookCall = $webHookCall;
+        $this->isValidTransactionHash = $isValidTransactionHash;
     }
 }

@@ -9,8 +9,23 @@
 
 namespace HenryEjemuta\LaravelMonnify\Facades;
 
+use HenryEjemuta\LaravelMonnify\Banks;
+use HenryEjemuta\LaravelMonnify\CustomerReservedAccount;
+use HenryEjemuta\LaravelMonnify\Disbursements;
+use HenryEjemuta\LaravelMonnify\SubAccounts;
+use HenryEjemuta\LaravelMonnify\Transactions;
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @method static Banks Banks()
+ * @method static CustomerReservedAccount ReservedAccount()
+ * @method static Disbursements Disbursements()
+ * @method static SubAccounts SubAccounts()
+ * @method static Transactions Transactions()
+ *
+ * Class Monnify
+ * @package HenryEjemuta\LaravelMonnify\Facades
+ */
 class Monnify extends Facade
 {
     protected static function getFacadeAccessor()

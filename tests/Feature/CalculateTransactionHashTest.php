@@ -86,7 +86,7 @@ class CalculateTransactionHashTest extends TestCase
         $payload = json_decode($this->payload, false);
         self::assertIsObject($payload);
         $payloadHash = $payload->transactionHash;
-        $computedHash = $this->fakeMonnifyClass()->calculateTransactionHash($payload->paymentReference, $payload->amountPaid, $payload->paidOn, $payload->transactionReference);
+        $computedHash = $this->fakeMonnifyClass()->Transactions()->calculateHash($payload->paymentReference, $payload->amountPaid, $payload->paidOn, $payload->transactionReference);
         self::assertSame($payloadHash, $computedHash);
     }
 

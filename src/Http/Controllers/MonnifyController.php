@@ -13,6 +13,7 @@ namespace HenryEjemuta\LaravelMonnify\Http\Controllers;
 
 
 use HenryEjemuta\LaravelMonnify\Events\NewWebHookCallReceived;
+use HenryEjemuta\LaravelMonnify\Facades\Monnify;
 use HenryEjemuta\LaravelMonnify\Models\WebHookCall;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -42,15 +43,9 @@ class MonnifyController extends Controller
 //        Log::info(print_r($validatedPayload, true));
         $webHookCall = new WebHookCall($request->all());
 
-        event(new NewWebHookCallReceived($webHookCall));
-//        $calculatedHash = Monnify::calculateTransactionHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
-//        if ($calculatedHash == $validatedPayload['transactionHash']) {
-//            $webHookCall = new WebHookCall($validatedPayload);
-//
-//            event(new NewWebHookCallReceived($webHookCall));
-//
-////            $transaction = Monnify::getTransactionStatus($validatedPayload['transactionReference']);
-//
-//        }
+        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
+
+        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
+
     }
 }
