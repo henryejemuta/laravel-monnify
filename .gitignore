@@ -1,7 +1,16 @@
-/vendor
-/build
-composer.phar
-composer.lock
-.DS_Store
-.idea
+build
+docs
+vendor
+coverage
+
 .phpunit.result.cache
+
+# JetBrain IDEs related
+*.iml
+*.ipr
+*.iws
+.idea
+.idea/
+
+#VSCode
+.vscode/
