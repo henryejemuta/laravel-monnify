@@ -26,8 +26,8 @@ class MonnifyReservedAccountSplit
     /**
      * MonnifyReservedAccountSplit constructor.
      * @param string $subAccountCode The unique reference for the sub account that should receive the split.
-     * @param float $feePercentage Boolean to determine if the sub account should bear transaction fees or not
-     * @param bool $feeBearer The percentage of the transaction fee to be borne by the sub account
+     * @param float $feePercentage The percentage of the transaction fee to be borne by the sub account
+     * @param bool $feeBearer Boolean to determine if the sub account should bear transaction fees or not 
      * @param float $splitPercentage The percentage of the amount paid to be split into the sub account.
      */
     public function __construct(string $subAccountCode, float $feePercentage, bool $feeBearer, float $splitPercentage)
