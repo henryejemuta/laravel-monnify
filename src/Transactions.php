@@ -75,7 +75,7 @@ abstract class Transactions
      * @param MonnifyPaymentMethods $monnifyPaymentMethods
      * @param MonnifyIncomeSplitConfig $incomeSplitConfig
      * @param string|null $currencyCode
-     * @return array
+     * @return object
      *
      * @throws MonnifyFailedRequestException
      * @link https://docs.teamapt.com/display/MON/Initialize+Transaction
