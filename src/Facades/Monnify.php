@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static Banks Banks()
- * @method static CustomerReservedAccount ReservedAccount()
+ * @method static CustomerReservedAccount ReservedAccounts()
  * @method static Disbursements Disbursements()
  * @method static SubAccounts SubAccounts()
  * @method static Transactions Transactions()

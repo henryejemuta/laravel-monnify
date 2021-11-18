@@ -61,8 +61,6 @@ class MonnifyPaymentMethod
                 return self::CARD();
             case 2:
                 return self::ACCOUNT_TRANSFER();
-            default:
-                return null;
         }
     }
 

@@ -150,6 +150,16 @@ class Monnify
         return $this->disbursements;
     }
 
+    private $invoice;
+
+    public function Invoice(): Invoice
+    {
+        if (is_null($this->invoice))
+            $this->invoice = new class($this, $this->config) extends Invoice {
+            };
+        return $this->invoice;
+    }
+
     private $subAccounts;
 
     public function SubAccounts(): SubAccounts
