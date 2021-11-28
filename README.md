@@ -31,17 +31,19 @@ php artisan monnify:init
 ```
 
 
-## Laravel Monnify Webhook Event
-To handle Monnify Webhook notification the Laravel Monnify already include the webhook endpoint `YOUR_DOMAIN/laravel-monnify/webhook`, replace `YOUR_DOMAIN` with your server url
+## Laravel Monnify Webhook Event (RESERVED ACCOUNT SHOULD USE THIS)
+To handle Monnify Webhook notification the Laravel Monnify already include the webhook endpoint `https://your_domain/laravel-monnify/webhook`, replace `your_domain` with your server url e.g. example.com
 
-- Log on to your [Monnify Dashboard Setting](https://app.monnify.com/settings), select **API Keys & Webhooks** and set your webhook to `YOUR_DOMAIN/laravel-monnify/webhook`
+- Log on to your [Monnify Dashboard Setting](https://app.monnify.com/settings), select **API Keys & Webhooks** and set your webhook to `https://your_domain/laravel-monnify/webhook`
 
-
-`php artisan make:listener MonnifyNotificationListener -e NewWebHookCallReceived`
+First, create an Event Listener by running the command below within your project directory; <br/>
+`php artisan make:listener MonnifyNotificationListener -e NewWebHookCallReceived` <br/>
 The NewWebHookCallReceived has two properties:
 - `WebHookCall webHookCall` => This is an unguarded Model with property dump from the webhook call `$event->webHookCall->transactionReference` gives you the transactionReference from the webhook call, learn more about webhookcall properties on Monnify API Docs [Here](https://docs.teamapt.com/display/MON/Webhook+Notifications) 
 - `bool isValidTransactionHash` => This does the transaction hash calculation for you ahead of time, if you prefer doing it yourself; `Monnify::Transactions()->calculateHash($event->webHookCall->paymentReference, $event->webHookCall->amountPaid, $event->webHookCall->paidOn, $event->webHookCall->transactionReference);`
-Laravel Monnify Webhook Event
+Laravel Monnify Webhook Event 
+
+Please see [MonnifyNotificationListener.example.txt](MonnifyNotificationListener.example.txt) for a sample implementation of the MonnifyNotificationListener.
 
 ```bash
 php artisan monnify:init
