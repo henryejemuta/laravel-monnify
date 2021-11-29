@@ -16,6 +16,7 @@ return [
      * ---------------------------------------------------------------
      *
      * The monnify base url upon which others is based, if not set it's going to use the sandbox version
+     * For Production use MONNIFY_BASE_URL=https://api.monnify.com in .env file
      */
     'base_url' => env('MONNIFY_BASE_URL', 'https://sandbox.monnify.com'),
 

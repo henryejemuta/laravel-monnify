@@ -62,6 +62,7 @@ class InstallLaravelMonnify extends Command
         }
 
         $this->info('Laravel Monnify Package Installation Complete!');
+        $this->writeWelcomeMessage();
     }
 
     private function writeChanges($path, string $key, string $configKey, $value){
@@ -108,5 +109,17 @@ class InstallLaravelMonnify extends Command
         return $this->confirm(
             'If your Monnify details are set within your .env file they would be overridden. Are you sure you want to override them if exists?'
         );
+    }
+
+    public function writeWelcomeMessage()
+    {
+        $this->line("\n<options=bold>Congratulations, you've successfuly installed Laravel Monnify and ready to process payment!</>\n");
+        if ($this->confirm('Would you like to show some love by starring the repo?')) {
+            if(PHP_OS_FAMILY == 'Darwin') exec('open https://github.com/henryejemuta/laravel-monnify');
+            if(PHP_OS_FAMILY == 'Windows') exec('start https://github.com/henryejemuta/laravel-monnify');
+            if(PHP_OS_FAMILY == 'Linux') exec('xdg-open https://github.com/henryejemuta/laravel-monnify');
+
+            $this->line("Thanks! Means the world to me!");
+        }
     }
 }
