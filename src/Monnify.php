@@ -103,6 +103,22 @@ class Monnify
     }
 
     /**
+     * When Monnify sends a notification, a hash of the request body is computed and set in the request header with the key <strong>monnify-signature</strong>. We expect you to try to recreate the hash and only accept or honor the notification if your computed hash matches what’s sent by Monnify.
+     *
+     * To calculate the hash value, you will have to hash the whole object with your unique client secret as key. This allows you to pass data to be hashed as a string alongside the client secret.
+     *
+     * @param string $stringifiedData Stringifer version of the whole request body object
+     * @return string Hash of successful transaction
+     *
+     * @link https://teamapt.atlassian.net/wiki/spaces/MON/pages/212008918/Computing+Request+Validation+Hash
+     */
+    public function computeRequestValidationHash(string $stringifiedData)
+    {
+        $clientSK = $this->config['secret_key'];
+        return hash_hmac('sha512', $stringifiedData, $clientSK);
+    }
+
+    /**
      * @return PendingRequest|Http
      * @throws MonnifyFailedRequestException
      */

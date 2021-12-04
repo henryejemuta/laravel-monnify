@@ -17,6 +17,7 @@ use HenryEjemuta\LaravelMonnify\Transactions;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static string computeRequestValidationHash(string $stringifiedData)
  * @method static Banks Banks()
  * @method static CustomerReservedAccount ReservedAccounts()
  * @method static Disbursements Disbursements()
