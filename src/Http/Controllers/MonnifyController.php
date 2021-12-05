@@ -57,6 +57,9 @@ class MonnifyController extends Controller
      */
     public function txnCompletion(Request $request): void
     {
+        $stringifiedData = json_encode($request->all());
+        Log::info("headers: " . print_r($request->header(), true));
+        Log::info("body: " . $stringifiedData);
         $request->validate([
             'eventData.transactionReference' => 'required',
             'eventData.paymentReference' => 'required',
@@ -69,13 +72,12 @@ class MonnifyController extends Controller
             'eventData.paymentMethod' => 'required',
         ]);
         $transactionHash = $request->header('monnify-signature');
-        Log::info("headers: " . print_r($request->header(), true));
         Log::info("transactionHash: $transactionHash");
         $payload = $request->input('eventData');
 
         $webHookCall = new WebHookCall($payload);
         $webHookCall->transactionHash = $request->header('monnify-signature');
-        $webHookCall->stringifiedData = json_encode($request->all());
+        $webHookCall->stringifiedData = $stringifiedData;
 
         $calculatedHash = Monnify::computeRequestValidationHash($webHookCall->stringifiedData);
         Log::info("$transactionHash\n\r{$webHookCall->stringifiedData}\n\r$calculatedHash");
