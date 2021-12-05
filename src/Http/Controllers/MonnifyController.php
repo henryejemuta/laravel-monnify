@@ -69,6 +69,8 @@ class MonnifyController extends Controller
             'eventData.paymentMethod' => 'required',
         ]);
         $transactionHash = $request->header('monnify-signature');
+        Log::info("headers: " . print_r($request->header(), true));
+        Log::info("transactionHash: $transactionHash");
         $payload = $request->input('eventData');
 
         $webHookCall = new WebHookCall($payload);
