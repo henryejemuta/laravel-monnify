@@ -60,17 +60,17 @@ class MonnifyController extends Controller
         $stringifiedData = json_encode($request->all());
         Log::info("headers: " . print_r($request->header(), true));
         Log::info("body: " . $stringifiedData);
-        $request->validate([
-            'eventData.transactionReference' => 'required',
-            'eventData.paymentReference' => 'required',
-            'eventData.amountPaid' => 'required',
-            'eventData.totalPayable' => 'required',
-            'eventData.paidOn' => 'required',
-            'eventData.paymentStatus' => 'required',
-            'eventData.paymentDescription' => 'required',
-            'eventData.currency' => 'required',
-            'eventData.paymentMethod' => 'required',
-        ]);
+//        $request->validate([
+//            'eventData.transactionReference' => 'required',
+//            'eventData.paymentReference' => 'required',
+//            'eventData.amountPaid' => 'required',
+//            'eventData.totalPayable' => 'required',
+//            'eventData.paidOn' => 'required',
+//            'eventData.paymentStatus' => 'required',
+//            'eventData.paymentDescription' => 'required',
+//            'eventData.currency' => 'required',
+//            'eventData.paymentMethod' => 'required',
+//        ]);
         $transactionHash = $request->header('monnify-signature');
         Log::info("transactionHash: $transactionHash");
         $payload = $request->input('eventData');
