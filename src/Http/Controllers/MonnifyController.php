@@ -28,6 +28,8 @@ class MonnifyController extends Controller
      */
     public function webhook(Request $request): void
     {
+
+        Log::info("webhook: " . print_r($request->all(), true));
         $validatedPayload = $request->validate([
             'transactionReference' => 'required',
             'paymentReference' => 'required',
@@ -40,8 +42,6 @@ class MonnifyController extends Controller
             'currency' => 'required',
             'paymentMethod' => 'required',
         ]);
-
-//        Log::info(print_r($validatedPayload, true));
         $webHookCall = new WebHookCall($request->all());
 
         $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
@@ -92,6 +92,8 @@ class MonnifyController extends Controller
      */
     public function refundCompletion(Request $request): void
     {
+
+        Log::info("refundCompletion: " . print_r($request->all(), true));
         $validatedPayload = $request->validate([
             'transactionReference' => 'required',
             'paymentReference' => 'required',
@@ -120,6 +122,8 @@ class MonnifyController extends Controller
      */
     public function disbursement(Request $request): void
     {
+
+        Log::info("disbursement: " . print_r($request->all(), true));
         $validatedPayload = $request->validate([
             'transactionReference' => 'required',
             'paymentReference' => 'required',
@@ -148,6 +152,8 @@ class MonnifyController extends Controller
      */
     public function settlement(Request $request): void
     {
+
+        Log::info("settlement: " . print_r($request->all(), true));
         $validatedPayload = $request->validate([
             'transactionReference' => 'required',
             'paymentReference' => 'required',
