@@ -28,25 +28,26 @@ class MonnifyController extends Controller
      */
     public function webhook(Request $request): void
     {
-
-        Log::info("webhook: " . print_r($request->all(), true));
-        $validatedPayload = $request->validate([
-            'transactionReference' => 'required',
-            'paymentReference' => 'required',
-            'amountPaid' => 'required',
-            'totalPayable' => 'required',
-            'paidOn' => 'required',
-            'paymentStatus' => 'required',
-            'paymentDescription' => 'required',
-            'transactionHash' => 'required',
-            'currency' => 'required',
-            'paymentMethod' => 'required',
-        ]);
-        $webHookCall = new WebHookCall($request->all());
-
-        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
-
-        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
+        $stringifiedData = json_encode($request->all());
+        Log::info("headers: " . print_r($request->header(), true));
+        Log::info("webhook: $stringifiedData");
+//        $validatedPayload = $request->validate([
+//            'transactionReference' => 'required',
+//            'paymentReference' => 'required',
+//            'amountPaid' => 'required',
+//            'totalPayable' => 'required',
+//            'paidOn' => 'required',
+//            'paymentStatus' => 'required',
+//            'paymentDescription' => 'required',
+//            'transactionHash' => 'required',
+//            'currency' => 'required',
+//            'paymentMethod' => 'required',
+//        ]);
+//        $webHookCall = new WebHookCall($request->all());
+//
+//        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
+//
+//        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
 
     }
 
@@ -59,7 +60,7 @@ class MonnifyController extends Controller
     {
         $stringifiedData = json_encode($request->all());
         Log::info("headers: " . print_r($request->header(), true));
-        Log::info("body: " . $stringifiedData);
+        Log::info("txnCompletion body: " . $stringifiedData);
 //        $request->validate([
 //            'eventData.transactionReference' => 'required',
 //            'eventData.paymentReference' => 'required',
@@ -71,18 +72,18 @@ class MonnifyController extends Controller
 //            'eventData.currency' => 'required',
 //            'eventData.paymentMethod' => 'required',
 //        ]);
-        $transactionHash = $request->header('monnify-signature');
-        Log::info("transactionHash: $transactionHash");
-        $payload = $request->input('eventData');
-
-        $webHookCall = new WebHookCall($payload);
-        $webHookCall->transactionHash = $request->header('monnify-signature');
-        $webHookCall->stringifiedData = $stringifiedData;
-
-        $calculatedHash = Monnify::computeRequestValidationHash($webHookCall->stringifiedData);
-        Log::info("$transactionHash\n\r{$webHookCall->stringifiedData}\n\r$calculatedHash");
+//        $transactionHash = $request->header('monnify-signature');
+//        Log::info("transactionHash: $transactionHash");
+//        $payload = $request->input('eventData');
 //
-        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $transactionHash));
+//        $webHookCall = new WebHookCall($payload);
+//        $webHookCall->transactionHash = $request->header('monnify-signature');
+//        $webHookCall->stringifiedData = $stringifiedData;
+//
+//        $calculatedHash = Monnify::computeRequestValidationHash($webHookCall->stringifiedData);
+//        Log::info("$transactionHash\n\r{$webHookCall->stringifiedData}\n\r$calculatedHash");
+////
+//        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $transactionHash));
 
     }
 
@@ -92,27 +93,28 @@ class MonnifyController extends Controller
      */
     public function refundCompletion(Request $request): void
     {
-
-        Log::info("refundCompletion: " . print_r($request->all(), true));
-        $validatedPayload = $request->validate([
-            'transactionReference' => 'required',
-            'paymentReference' => 'required',
-            'amountPaid' => 'required',
-            'totalPayable' => 'required',
-            'paidOn' => 'required',
-            'paymentStatus' => 'required',
-            'paymentDescription' => 'required',
-            'transactionHash' => 'required',
-            'currency' => 'required',
-            'paymentMethod' => 'required',
-        ]);
-
-//        Log::info(print_r($validatedPayload, true));
-        $webHookCall = new WebHookCall($request->all());
-
-        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
-
-        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
+        $stringifiedData = json_encode($request->all());
+        Log::info("headers: " . print_r($request->header(), true));
+        Log::info("refundCompletion: $stringifiedData");
+//        $validatedPayload = $request->validate([
+//            'transactionReference' => 'required',
+//            'paymentReference' => 'required',
+//            'amountPaid' => 'required',
+//            'totalPayable' => 'required',
+//            'paidOn' => 'required',
+//            'paymentStatus' => 'required',
+//            'paymentDescription' => 'required',
+//            'transactionHash' => 'required',
+//            'currency' => 'required',
+//            'paymentMethod' => 'required',
+//        ]);
+//
+////        Log::info(print_r($validatedPayload, true));
+//        $webHookCall = new WebHookCall($request->all());
+//
+//        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
+//
+//        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
 
     }
 
@@ -122,27 +124,28 @@ class MonnifyController extends Controller
      */
     public function disbursement(Request $request): void
     {
-
-        Log::info("disbursement: " . print_r($request->all(), true));
-        $validatedPayload = $request->validate([
-            'transactionReference' => 'required',
-            'paymentReference' => 'required',
-            'amountPaid' => 'required',
-            'totalPayable' => 'required',
-            'paidOn' => 'required',
-            'paymentStatus' => 'required',
-            'paymentDescription' => 'required',
-            'transactionHash' => 'required',
-            'currency' => 'required',
-            'paymentMethod' => 'required',
-        ]);
-
-//        Log::info(print_r($validatedPayload, true));
-        $webHookCall = new WebHookCall($request->all());
-
-        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
-
-        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
+        $stringifiedData = json_encode($request->all());
+        Log::info("headers: " . print_r($request->header(), true));
+        Log::info("disbursement: $stringifiedData");
+//        $validatedPayload = $request->validate([
+//            'transactionReference' => 'required',
+//            'paymentReference' => 'required',
+//            'amountPaid' => 'required',
+//            'totalPayable' => 'required',
+//            'paidOn' => 'required',
+//            'paymentStatus' => 'required',
+//            'paymentDescription' => 'required',
+//            'transactionHash' => 'required',
+//            'currency' => 'required',
+//            'paymentMethod' => 'required',
+//        ]);
+//
+////        Log::info(print_r($validatedPayload, true));
+//        $webHookCall = new WebHookCall($request->all());
+//
+//        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
+//
+//        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
 
     }
 
@@ -153,26 +156,28 @@ class MonnifyController extends Controller
     public function settlement(Request $request): void
     {
 
-        Log::info("settlement: " . print_r($request->all(), true));
-        $validatedPayload = $request->validate([
-            'transactionReference' => 'required',
-            'paymentReference' => 'required',
-            'amountPaid' => 'required',
-            'totalPayable' => 'required',
-            'paidOn' => 'required',
-            'paymentStatus' => 'required',
-            'paymentDescription' => 'required',
-            'transactionHash' => 'required',
-            'currency' => 'required',
-            'paymentMethod' => 'required',
-        ]);
-
-//        Log::info(print_r($validatedPayload, true));
-        $webHookCall = new WebHookCall($request->all());
-
-        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
-
-        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
+        $stringifiedData = json_encode($request->all());
+        Log::info("headers: " . print_r($request->header(), true));
+        Log::info("settlement: $stringifiedData");
+//        $validatedPayload = $request->validate([
+//            'transactionReference' => 'required',
+//            'paymentReference' => 'required',
+//            'amountPaid' => 'required',
+//            'totalPayable' => 'required',
+//            'paidOn' => 'required',
+//            'paymentStatus' => 'required',
+//            'paymentDescription' => 'required',
+//            'transactionHash' => 'required',
+//            'currency' => 'required',
+//            'paymentMethod' => 'required',
+//        ]);
+//
+////        Log::info(print_r($validatedPayload, true));
+//        $webHookCall = new WebHookCall($request->all());
+//
+//        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
+//
+//        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
 
     }
 }
