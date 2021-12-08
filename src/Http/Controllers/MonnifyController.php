@@ -66,8 +66,10 @@ class MonnifyController extends Controller
 
         $calculatedHash1 = Monnify::computeRequestValidationHash(json_encode($payload));
         $calculatedHash = Monnify::computeRequestValidationHash($webHookCall->stringifiedData);
-        Log::info("$transactionHash\n\r{$webHookCall->stringifiedData}\n\rcalculatedHash1: $calculatedHash1\n\rcalculatedHash: $calculatedHash");
-        Log::info(print_r($webHookCall, true));
+        $calculatedTestHash1 = Monnify::computeRequestValidationHashTest(json_encode($payload));
+        $calculatedTestHash = Monnify::computeRequestValidationHashTest($webHookCall->stringifiedData);
+        Log::info("{$webHookCall->stringifiedData}\n\rcalculatedHash1: $calculatedHash1\n\rcalculatedHash: $calculatedHash");
+        Log::info("calculatedTestHash1: $calculatedTestHash1\n\rcalculatedTestHash: $calculatedTestHash");
 //        $request->validate([
 //            'eventData.transactionReference' => 'required',
 //            'eventData.paymentReference' => 'required',

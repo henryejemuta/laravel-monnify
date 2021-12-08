@@ -118,6 +118,12 @@ class Monnify
         return hash_hmac('sha512', $stringifiedData, $clientSK);
     }
 
+    public function computeRequestValidationHashTest(string $stringifiedData)
+    {
+        $clientSK = $this->config['secret_key'];
+        return hash('sha512', "$clientSK|$stringifiedData");
+    }
+
     /**
      * @return PendingRequest|Http
      * @throws MonnifyFailedRequestException
