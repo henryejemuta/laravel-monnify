@@ -59,19 +59,17 @@ class MonnifyController extends Controller
         Log::info("transactionHash: $transactionHash");
 
         $payload = $request->input('eventData');
-        $stringifiedPayloadData = json_encode($payload);
         $stringifiedData = json_encode($request->all());
         $webHookCall = new WebHookCall($payload);
         $webHookCall->transactionHash = $request->header('monnify-signature');
         $webHookCall->stringifiedData = $stringifiedData;
 
-        $calculatedHash1 = Monnify::computeRequestValidationHash($stringifiedPayloadData);
+
         $calculatedHash = Monnify::computeRequestValidationHash($stringifiedData);
-        $calculatedTestHash1 = Monnify::computeRequestValidationHashTest($stringifiedPayloadData);
         $calculatedTestHash = Monnify::computeRequestValidationHashTest($stringifiedData);
-        Log::info("{$webHookCall->stringifiedData}\n\rcalculatedHash1: $calculatedHash1\n\rcalculatedHash: $calculatedHash");
-        Log::info("stringifiedData: $stringifiedData\n\rstringifiedPayloadData: $stringifiedPayloadData");
-        Log::info("\n\rcalculatedTestHash1: $calculatedTestHash1\n\rcalculatedTestHash: $calculatedTestHash");
+        Log::info("{$webHookCall->stringifiedData}\n\rtransactionHash: $transactionHash\n\rcalculatedHash: $calculatedHash");
+        Log::info("stringifiedData: $stringifiedData\n\r");
+        Log::info("\n\rcalculatedTestHash: $calculatedTestHash");
 //        $request->validate([
 //            'eventData.transactionReference' => 'required',
 //            'eventData.paymentReference' => 'required',
