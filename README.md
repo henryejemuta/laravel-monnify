@@ -32,10 +32,22 @@ php artisan monnify:init
 
 
 ## Laravel Monnify Webhook Event (RESERVED ACCOUNT SHOULD USE THIS)
-To handle Monnify Webhook notification the Laravel Monnify already include the webhook endpoint `https://your_domain/laravel-monnify/webhook`, replace `your_domain` with your server url e.g. example.com
+To handle Monnify Webhook event-based notifications, the Laravel Monnify already include all required webhook endpoints
+Log on to your [Monnify Dashboard Setting](https://app.monnify.com/settings), under Developer menu, select **Webhook URLs** and set the respective webhook URL as follows:
 
-- Log on to your [Monnify Dashboard Setting](https://app.monnify.com/settings), select **API Keys & Webhooks** and set your `Transaction Completion` webhook to `https://your_domain/laravel-monnify/webhook`
+ - Transaction completion `https://your_domain/laravel-monnify/webhook/transaction-completion`
+ - Refund completion `https://your_domain/laravel-monnify/webhook/refund-completion`
+ - Disbursement `https://your_domain/laravel-monnify/webhook/disbursement`
+ - Settlement `https://your_domain/laravel-monnify/webhook/settlement`
+ 
+NOTE: Make sure you replace `your_domain` with your server url e.g. example.com
 
+##### LEGACY Webhook
+To handle Monnify LEGACY Webhook notification the Laravel Monnify already include the webhook endpoint `https://your_domain/laravel-monnify/webhook`, replace `your_domain` with your server url e.g. example.com
+
+- Log on to your [Monnify Dashboard Setting](https://app.monnify.com/settings), select **API Keys & Webhooks** and set your webhook to `https://your_domain/laravel-monnify/webhook`
+
+##### Setup Listener
 Next, create an Event Listener by running the command below within your project directory; <br/>
 ```bash
 php artisan make:listener MonnifyNotificationListener -e NewWebHookCallReceived
@@ -45,8 +57,13 @@ The `NewWebHookCallReceived` has two properties:
 - `bool isValidTransactionHash` => This does the transaction hash calculation for you ahead of time, if you prefer doing it yourself; `Monnify::Transactions()->calculateHash($event->webHookCall->paymentReference, $event->webHookCall->amountPaid, $event->webHookCall->paidOn, $event->webHookCall->transactionReference);`
 Laravel Monnify Webhook Event 
 
-Please see [MonnifyNotificationListener.example.txt](MonnifyNotificationListener.example.txt) for a sample implementation of the MonnifyNotificationListener.
+Please see [MonnifyLegacyNotificationListener.example.txt](MonnifyLegacyNotificationListener.example.txt) for LEGACY sample implementation of the MonnifyNotificationListener.
+Please see [MonnifyNotificationListener.example.txt](MonnifyNotificationListener.example.txt) for LEGACY sample implementation of the MonnifyNotificationListener.
 
+<br/>
+<br/>
+
+### Note
 To ensure your listener works correctly, you have to register the event within in your `App\Providers\EventServiceProvider` manually if auto discovery isn't turned on
 
 ##### Manually Registering Events
@@ -90,11 +107,6 @@ public function shouldDiscoverEvents()
 ```
 
 <br/>
-
-```bash
-php artisan monnify:init
-```
-
 
 
 ## Usage
