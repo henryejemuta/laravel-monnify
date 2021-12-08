@@ -115,7 +115,7 @@ class Monnify
     public function computeRequestValidationHash(string $stringifiedData)
     {
         $clientSK = $this->config['secret_key'];
-        return hash_hmac('sha512', $stringifiedData, $clientSK);
+        return hash_hmac('sha512', $clientSK, $stringifiedData);
     }
 
     public function computeRequestValidationHashTest(string $stringifiedData)
