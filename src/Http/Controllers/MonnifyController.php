@@ -154,8 +154,9 @@ class MonnifyController extends Controller
         $webHookCall->transactionHash = $monnifySignature;
         $webHookCall->stringifiedData = $stringifiedData;
 
+        Log::info("$stringifiedData\n\r");
         $calculatedHash = Monnify::computeRequestValidationHash($stringifiedData);
-//        Log::info("$transactionHash\n\r{$webHookCall->stringifiedData}\n\r$calculatedHash");
+        Log::info("$monnifySignature\n\r{$webHookCall->stringifiedData}\n\r$calculatedHash");
         $isValidHash = $calculatedHash == $monnifySignature;
         return $webHookCall;
     }
