@@ -148,15 +148,14 @@ class MonnifyController extends Controller
     {
         $monnifySignature = $request->header('monnify-signature');
 
-        $stringifiedData = $request->json()->all();
+        $stringifiedData = json_encode($request->all());
         $payload = $request->input('eventData');
         $webHookCall = new WebHookCall($payload);
         $webHookCall->transactionHash = $monnifySignature;
         $webHookCall->stringifiedData = $stringifiedData;
 
-        Log::info("$stringifiedData\n\r");
         $calculatedHash = Monnify::computeRequestValidationHash($stringifiedData);
-        Log::info("$monnifySignature\n\r{$webHookCall->stringifiedData}\n\r$calculatedHash");
+//        Log::info("$transactionHash\n\r{$webHookCall->stringifiedData}\n\r$calculatedHash");
         $isValidHash = $calculatedHash == $monnifySignature;
         return $webHookCall;
     }

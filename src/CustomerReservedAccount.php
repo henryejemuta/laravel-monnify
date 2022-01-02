@@ -43,6 +43,7 @@ abstract class CustomerReservedAccount
      * @param string $accountName The name you want to be attached to the reserved account. This will be displayed during name enquiry
      * @param string $customerEmail Email address of the customer who the account is being reserved for. This is the unique identifier for each customer.
      * @param string $customerName Full name of the customer who the account is being reserved for
+     * @param bool $getAllAvailableBanks If you want to reserve accounts across all partner banks for your customers, you will need to set the boolean value of "$getAllAvailableBanks" to true. Note that Wema bank accounts are the default virtual account.
      * @param string|null $customerBvn BVN of the customer the account is being reserved for. Although this field is not mandatory, it is advised that it is supplied. Please note that there could be low limits on the reserved account in future, if BVN is not supplied.
      * @param string|null $currencyCode
      * @param MonnifyIncomeSplitConfig|null $incomeSplitConfig
@@ -54,7 +55,7 @@ abstract class CustomerReservedAccount
      * @throws MonnifyFailedRequestException
      * @link https://docs.teamapt.com/display/MON/Reserving+An+Account
      */
-    public function reserveAccount(string $accountReference, string $accountName, string $customerEmail, string $customerName = null, string $customerBvn = null, string $currencyCode = null, bool $restrictPaymentSource = false, MonnifyAllowedPaymentSources $allowedPaymentSources = null, MonnifyIncomeSplitConfig $incomeSplitConfig = null)
+    public function reserveAccount(string $accountReference, string $accountName, string $customerEmail, string $customerName = null, bool $getAllAvailableBanks = false, string $customerBvn = null, string $currencyCode = null, bool $restrictPaymentSource = false, MonnifyAllowedPaymentSources $allowedPaymentSources = null, MonnifyIncomeSplitConfig $incomeSplitConfig = null)
     {
         if ($restrictPaymentSource && is_null($allowedPaymentSources))
             throw new MonnifyInvalidParameterException("Allowed Payment Sources can't be null if payment source is restricted");
@@ -67,6 +68,7 @@ abstract class CustomerReservedAccount
             "contractCode" => $this->config['contract_code'],
             "customerEmail" => $customerEmail,
             "restrictPaymentSource" => $restrictPaymentSource,
+            "getAllAvailableBanks" => $getAllAvailableBanks
         ];
 
         if ((!is_null($customerName)) && (!empty(trim($customerName))))
@@ -80,6 +82,66 @@ abstract class CustomerReservedAccount
 
         if (!is_null($incomeSplitConfig))
             $requestBody['incomeSplitConfig'] = $incomeSplitConfig->toArray();
+
+        $response = $this->monnify->withOAuth2()->post($endpoint, $requestBody);
+
+
+        $responseObject = json_decode($response->body());
+        if (!$response->successful())
+            throw new MonnifyFailedRequestException($responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}", $responseObject->responseCode ?? $responseObject->status);
+
+        return $responseObject->responseBody;
+    }
+
+
+    /**
+     * Once an account number has been reserved for a customer, the customer can make payment by initiating a transfer to that account number at any time. Once the transfer hits the partner bank, we will notify you with the transfer details along with the accountReference you specified when reserving the account.
+     *
+     * @param string $accountReference Your unique reference used to identify this reserved account
+     * @param string $accountName The name you want to be attached to the reserved account. This will be displayed during name enquiry
+     * @param string $customerEmail Email address of the customer who the account is being reserved for. This is the unique identifier for each customer.
+     * @param string $customerName Full name of the customer who the account is being reserved for
+     * @param array $preferredBanksCodes The bank codes of the preferred banks in an array. Wema Bank => 035, and Rolez MFB => 50515
+     * @param string|null $customerBvn BVN of the customer the account is being reserved for. Although this field is not mandatory, it is advised that it is supplied. Please note that there could be low limits on the reserved account in future, if BVN is not supplied.
+     * @param string|null $currencyCode
+     * @param MonnifyIncomeSplitConfig|null $incomeSplitConfig
+     * @param bool $restrictPaymentSource
+     * @param MonnifyAllowedPaymentSources|MonnifyAllowedPaymentSourcesForRegulatedBusiness $allowedPaymentSources Object capturing bvns or account numbers or account names that are permitted to fund a reserved account. This is mandatory if restrictPaymentSource is set to true. Click here to learn more about source account restriction.
+     * @return object
+     *
+     * @throws MonnifyInvalidParameterException
+     * @throws MonnifyFailedRequestException
+     * @link https://docs.teamapt.com/display/MON/Reserving+An+Account
+     */
+    public function reserveAccountWithBankCodes(string $accountReference, string $accountName, string $customerEmail, string $customerName = null, array $preferredBanksCodes = ["035"], string $customerBvn = null, string $currencyCode = null, bool $restrictPaymentSource = false, MonnifyAllowedPaymentSources $allowedPaymentSources = null, MonnifyIncomeSplitConfig $incomeSplitConfig = null)
+    {
+        if ($restrictPaymentSource && is_null($allowedPaymentSources))
+            throw new MonnifyInvalidParameterException("Allowed Payment Sources can't be null if payment source is restricted");
+
+        $endpoint = "{$this->monnify->baseUrl}{$this->monnify->v1}bank-transfer/reserved-accounts";
+        $requestBody = [
+            "accountReference" => $accountReference,
+            "accountName" => $accountName,
+            "currencyCode" => $currencyCode ?? $this->config['default_currency_code'],
+            "contractCode" => $this->config['contract_code'],
+            "customerEmail" => $customerEmail,
+            "restrictPaymentSource" => $restrictPaymentSource,
+            "getAllAvailableBanks" => false,
+            "preferredBanks" => ["035"]
+        ];
+
+        if ((!is_null($customerName)) && (!empty(trim($customerName))))
+            $requestBody['customerName'] = $customerName;
+
+        if (!is_null($allowedPaymentSources))
+            $requestBody['allowedPaymentSources'] = $allowedPaymentSources->toArray();
+
+        if (!is_null($incomeSplitConfig))
+            $requestBody['incomeSplitConfig'] = $incomeSplitConfig->toArray();
+
+        if ((!is_null($customerBvn)) && (!empty(trim($customerBvn))))
+            $requestBody['customerBvn'] = $customerBvn;
+
 
         $response = $this->monnify->withOAuth2()->post($endpoint, $requestBody);
 
