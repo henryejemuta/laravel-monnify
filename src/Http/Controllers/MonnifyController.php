@@ -150,6 +150,7 @@ class MonnifyController extends Controller
 
         $stringifiedData = json_encode($request->all());
         $payload = $request->input('eventData');
+      
         $webHookCall = new WebHookCall($payload);
         $webHookCall->transactionHash = $monnifySignature;
         $webHookCall->stringifiedData = $stringifiedData;
