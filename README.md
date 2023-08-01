@@ -57,8 +57,8 @@ The `NewWebHookCallReceived` has two properties:
 - `bool isValidTransactionHash` => This does the transaction hash calculation for you ahead of time, if you prefer doing it yourself; `Monnify::Transactions()->calculateHash($event->webHookCall->paymentReference, $event->webHookCall->amountPaid, $event->webHookCall->paidOn, $event->webHookCall->transactionReference);`
 Laravel Monnify Webhook Event 
 
-Please see [MonnifyLegacyNotificationListener.example.txt](MonnifyLegacyNotificationListener.example.txt) for LEGACY sample implementation of the MonnifyNotificationListener.
-Please see [MonnifyNotificationListener.example.txt](MonnifyNotificationListener.example.txt) for LEGACY sample implementation of the MonnifyNotificationListener.
+Please see [MonnifyLegacyNotificationListener.example.txt](MonnifyLegacyNotificationListener.example.php) for LEGACY sample implementation of the MonnifyNotificationListener.
+Please see [MonnifyNotificationListener.example.txt](MonnifyNotificationListener.example.php) for LEGACY sample implementation of the MonnifyNotificationListener.
 
 <br/>
 <br/>

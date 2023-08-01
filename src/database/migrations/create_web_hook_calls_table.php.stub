@@ -25,6 +25,7 @@ class CreateWebHookCallsTable extends Migration
             $table->string('transactionHash');
             $table->string('currency');
             $table->string('paymentMethod');
+            $table->longText('content');
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@ namespace HenryEjemuta\LaravelMonnify\Http\Controllers;
 
 use HenryEjemuta\LaravelMonnify\Events\NewWebHookCallReceived;
 use HenryEjemuta\LaravelMonnify\Facades\Monnify;
+use HenryEjemuta\LaravelMonnify\Http\Middleware\VerifyWebhookSignature;
 use HenryEjemuta\LaravelMonnify\Models\WebHookCall;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -21,6 +22,20 @@ use Illuminate\Support\Facades\Log;
 
 class MonnifyController extends Controller
 {
+
+
+    /**
+     * Create a new MonnifyController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (!empty(config('monnify.secret_key'))) {
+            $this->middleware(VerifyWebhookSignature::class);
+        }
+    }
+
 
     /**
      * Receive a webhook call from monnify and validate the transaction hash, then dispatch an event if the hash is valid else just ignore
@@ -41,10 +56,9 @@ class MonnifyController extends Controller
             'paymentMethod' => 'required',
         ]);
         $webHookCall = new WebHookCall($request->all());
+        $webHookCall->content = $request->getContent();
 
-        $calculatedHash = Monnify::Transactions()->calculateHash($validatedPayload['paymentReference'], $validatedPayload['amountPaid'], $validatedPayload['paidOn'], $validatedPayload['transactionReference']);
-
-        event(new NewWebHookCallReceived($webHookCall, $calculatedHash == $validatedPayload['transactionHash']));
+        event(new NewWebHookCallReceived($webHookCall));
 
     }
 
@@ -67,9 +81,9 @@ class MonnifyController extends Controller
             'eventData.paymentMethod' => 'required',
         ]);
 
-        $isValidHash = false;
-        $webHookCall = $this->initRequest($request, $isValidHash);
-        event(new NewWebHookCallReceived($webHookCall, $isValidHash, NewWebHookCallReceived::WEB_HOOK_EVENT_TXN_COMPLETION_CALL));
+        
+        $webHookCall = $this->initRequest($request);
+        event(new NewWebHookCallReceived($webHookCall, NewWebHookCallReceived::WEB_HOOK_EVENT_TXN_COMPLETION_CALL));
     }
 
     /**
@@ -90,9 +104,9 @@ class MonnifyController extends Controller
             'eventData.paymentMethod' => 'required',
         ]);
 
-        $isValidHash = false;
-        $webHookCall = $this->initRequest($request, $isValidHash);
-        event(new NewWebHookCallReceived($webHookCall, $isValidHash, NewWebHookCallReceived::WEB_HOOK_EVENT_REFUND_COMPLETION_CALL));
+        
+        $webHookCall = $this->initRequest($request);
+        event(new NewWebHookCallReceived($webHookCall, NewWebHookCallReceived::WEB_HOOK_EVENT_REFUND_COMPLETION_CALL));
 
     }
 
@@ -115,9 +129,9 @@ class MonnifyController extends Controller
             'eventData.paymentMethod' => 'required',
         ]);
 
-        $isValidHash = false;
-        $webHookCall = $this->initRequest($request, $isValidHash);
-        event(new NewWebHookCallReceived($webHookCall, $isValidHash, NewWebHookCallReceived::WEB_HOOK_EVENT_DISBURSEMENT_CALL));
+        
+        $webHookCall = $this->initRequest($request);
+        event(new NewWebHookCallReceived($webHookCall, NewWebHookCallReceived::WEB_HOOK_EVENT_DISBURSEMENT_CALL));
 
     }
 
@@ -139,25 +153,21 @@ class MonnifyController extends Controller
             'eventData.currency' => 'required',
             'eventData.destinationBankName' => 'required',
         ]);
-        $isValidHash = false;
-        $webHookCall = $this->initRequest($request, $isValidHash);
-        event(new NewWebHookCallReceived($webHookCall, $isValidHash, NewWebHookCallReceived::WEB_HOOK_EVENT_SETTLEMENT_CALL));
+        
+        $webHookCall = $this->initRequest($request);
+        event(new NewWebHookCallReceived($webHookCall, NewWebHookCallReceived::WEB_HOOK_EVENT_SETTLEMENT_CALL));
     }
 
-    private function initRequest($request, &$isValidHash)
+    private function initRequest($request)
     {
         $monnifySignature = $request->header('monnify-signature');
 
-        $stringifiedData = json_encode($request->all());
+        $stringifiedData = $request->getContent();
         $payload = $request->input('eventData');
       
         $webHookCall = new WebHookCall($payload);
         $webHookCall->transactionHash = $monnifySignature;
         $webHookCall->stringifiedData = $stringifiedData;
-
-        $calculatedHash = Monnify::computeRequestValidationHash($stringifiedData);
-//        Log::info("$transactionHash\n\r{$webHookCall->stringifiedData}\n\r$calculatedHash");
-        $isValidHash = $calculatedHash == $monnifySignature;
         return $webHookCall;
     }
 }

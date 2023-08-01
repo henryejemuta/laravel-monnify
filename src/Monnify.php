@@ -103,32 +103,6 @@ class Monnify
     }
 
     /**
-     * When Monnify sends a notification, a hash of the request body is computed and set in the request header with the key <strong>monnify-signature</strong>. We expect you to try to recreate the hash and only accept or honor the notification if your computed hash matches what’s sent by Monnify.
-     *
-     * To calculate the hash value, you will have to hash the whole object with your unique client secret as key. This allows you to pass data to be hashed as a string alongside the client secret.
-     *
-     * @param string $stringifiedData Stringifer version of the whole request body object
-     * @return string Hash of successful transaction
-     *
-     * @link https://teamapt.atlassian.net/wiki/spaces/MON/pages/212008918/Computing+Request+Validation+Hash
-     */
-    public function computeRequestValidationHash(string $stringifiedData)
-    {
-        $clientSK = $this->config['secret_key'];
-        return hash_hmac('sha512', $stringifiedData, $clientSK);
-    }
-
-    public function computeRequestValidationHashTest(string $stringifiedData)
-    {
-        $DEFAULT_MERCHANT_CLIENT_SECRET = '91MUDL9N6U3BQRXBQ2PJ9M0PW4J22M1Y';
-        $data = '{"eventData":{"product":{"reference":"111222333","type":"OFFLINE_PAYMENT_AGENT"},"transactionReference":"MNFY|76|20211117154810|000001","paymentReference":"0.01462001097368737","paidOn":"17/11/2021 3:48:10 PM","paymentDescription":"Mockaroo Jesse","metaData":{},"destinationAccountInformation":{},"paymentSourceInformation":{},"amountPaid":78000,"totalPayable":78000,"offlineProductInformation":{"code":"41470","type":"DYNAMIC"},"cardDetails":{},"paymentMethod":"CASH","currency":"NGN","settlementAmount":77600,"paymentStatus":"PAID","customer":{"name":"Mockaroo Jesse","email":"111222333@ZZAMZ4WT4Y3E.monnify"}},"eventType":"SUCCESSFUL_TRANSACTION"}';
-        $hash = hash_hmac('sha512', $stringifiedData, $DEFAULT_MERCHANT_CLIENT_SECRET);
-        $clientSK = $this->config['secret_key'];
-        $dataHash = hash_hmac('sha512', $data, $clientSK);
-        return "$hash\n\r$dataHash\n\r" . hash_hmac('sha512', $data, $DEFAULT_MERCHANT_CLIENT_SECRET);
-    }
-
-    /**
      * @return PendingRequest|Http
      * @throws MonnifyFailedRequestException
      */

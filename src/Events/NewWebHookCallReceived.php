@@ -26,13 +26,11 @@ class NewWebHookCallReceived
     public const WEB_HOOK_EVENT_SETTLEMENT_CALL = "settlement";
 
     public $webHookCall;
-    public $isValidTransactionHash;
     public $webhookType;
 
-    public function __construct(WebHookCall $webHookCall, bool $isValidTransactionHash, string $webhookType = self::WEB_HOOK_LEGACY_CALL)
+    public function __construct(WebHookCall $webHookCall, string $webhookType = self::WEB_HOOK_LEGACY_CALL)
     {
         $this->webHookCall = $webHookCall;
-        $this->isValidTransactionHash = $isValidTransactionHash;
         $this->webhookType = $webhookType;
     }
 }
