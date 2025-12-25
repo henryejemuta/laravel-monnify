@@ -14,3 +14,11 @@ coverage
 
 #VSCode
 .vscode/
+
+#Composer
+composer.phar
+composer.lock
+*.lock
+
+#VSCode
+.antigravity/

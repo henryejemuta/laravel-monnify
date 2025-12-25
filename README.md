@@ -191,7 +191,13 @@ Similar implementation applies to other sections (i.e. Banks, CustomerReservedAc
     $responseBody = Monnify::ReservedAccounts()->getAllTransactions(array $queryParams);
     $responseBody = Monnify::ReservedAccounts()->reserveAccount(string $accountReference, string $accountName, string $customerEmail, string $customerName = null, string $customerBvn = null, string $currencyCode = null, bool $restrictPaymentSource = false, MonnifyAllowedPaymentSources $allowedPaymentSources = null, MonnifyIncomeSplitConfig $incomeSplitConfig = null);
     $responseBody = Monnify::ReservedAccounts()->getAccountDetails(string $accountReference);
+    $responseBody = Monnify::ReservedAccounts()->getAccountDetails(string $accountReference);
     $responseBody = Monnify::ReservedAccounts()->updateSplitConfig(string $accountReference, MonnifyIncomeSplitConfig $incomeSplitConfig);
+
+    
+    $responseBody = Monnify::Verification()->validateBVN(string $bvn, string $name, string $dob, string $mobileNo);
+    $responseBody = Monnify::Verification()->validateBVNAccountInvalidation(string $bvn, string $accountNumber, string $bankCode);
+    $responseBody = Monnify::Verification()->validateNIN(string $nin);
 
 
 ```

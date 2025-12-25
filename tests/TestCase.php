@@ -29,7 +29,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function getEnvironmentSetUp($app)
     {
-        // perform environment setup
+        $app['config']->set('monnify.base_url', 'https://sandbox.monnify.com');
+        $app['config']->set('monnify.api_key', 'test_api_key');
+        $app['config']->set('monnify.secret_key', 'test_secret_key');
+        $app['config']->set('monnify.contract_code', '1234567890');
     }
 
 }
