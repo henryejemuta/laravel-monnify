@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-monnify` will be documented in this file
 
+- Release v1.2.2
+## v1.2.2 - 2025-12-25
+- Added support for Laravel 8, 9, 10, 11, and 12
+- Added support for PHP 7.4 and 8.0+
+- Added `Verification` module for BVN, NIN, and Account validation
+- Added comprehensive feature tests for all modules
+- Fixed `Disbursements::initiateTransferSingle` response handling bug
+- Updated `composer.json` dependencies (Mockery, PHPUnit, Testbench)
+
 - Release 2.1.0
 ## 2.1.0 2021-11-18 Added Invoice, Updated README.md, other cleanup
 
