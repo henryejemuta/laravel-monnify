@@ -33,3 +33,38 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
+
+  update-changelog:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Generate Changelog
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          toTag: ${{ github.ref_name }}
+
+      - name: Prepend to CHANGELOG.md
+        run: |
+          echo "## ${{ github.ref_name }} - $(date +'%Y-%m-%d')" > new_entry.md
+          echo "" >> new_entry.md
+          echo "${{ steps.changelog.outputs.changelog }}" >> new_entry.md
+          echo "" >> new_entry.md
+          if [ -f CHANGELOG.md ]; then
+            cat CHANGELOG.md >> new_entry.md
+          fi
+          mv new_entry.md CHANGELOG.md
+
+      - name: Commit & Push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs(changelog): update CHANGELOG.md for ${{ github.ref_name }}"
+          branch: main
