@@ -153,6 +153,43 @@ abstract class Transactions
 
 
     /**
+     * Get the status of a transaction using either the Monnify transaction reference
+     * or the merchant's payment reference as a query parameter.
+     *
+     * @param string|null $transactionReference The Monnify-generated reference (URL-encoded).
+     * @param string|null $paymentReference The merchant-generated reference (URL-encoded).
+     * @return object
+     *
+     * @throws \InvalidArgumentException
+     * @throws MonnifyFailedRequestException
+     * @link https://developers.monnify.com/api#tag/transactions/get-transaction-status-by-reference
+     */
+    public function getTransactionStatusByReference(string $transactionReference = null, string $paymentReference = null): object
+    {
+        if (is_null($transactionReference) && is_null($paymentReference))
+            throw new \InvalidArgumentException("At least one of transactionReference or paymentReference must be provided.");
+
+        $queryParams = array_filter([
+            'transactionReference' => $transactionReference,
+            'paymentReference'     => $paymentReference,
+        ]);
+
+        $endpoint = "{$this->monnify->baseUrl}{$this->monnify->v2}merchant/transactions/query?" . http_build_query($queryParams);
+
+        $response = $this->monnify->withOAuth2()->get($endpoint);
+
+        $responseObject = json_decode($response->body());
+        if (!$response->successful())
+            throw new MonnifyFailedRequestException(
+                $responseObject->responseMessage ?? "Path '{$responseObject->path}' {$responseObject->error}",
+                $responseObject->responseCode ?? $responseObject->status
+            );
+
+        return $responseObject->responseBody;
+    }
+
+
+    /**
      * Allows you get virtual account details for a transaction using the transactionReference of an initialized transaction.
      * This is useful if you want to control the payment interface.
      * There are a lot of UX considerations to keep in mind if you choose to do this so we recommend you read this @link https://docs.teamapt.com/display/MON/Optimizing+Your+User+Experience.
