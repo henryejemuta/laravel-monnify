@@ -1,3 +1,7 @@
+## v1.2.3 - 2026-05-02
+
+- no changes
+
 # Changelog
 
 All notable changes to `laravel-monnify` will be documented in this file
