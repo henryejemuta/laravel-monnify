@@ -148,15 +148,17 @@ class MonnifyController extends Controller
     {
         $monnifySignature = $request->header('monnify-signature');
 
-        $stringifiedData = json_encode($request->all());
+        // Use raw request body — re-encoding via json_encode($request->all()) can alter
+        // byte order, whitespace, or float formatting, causing the HMAC to never match
+        // the signature Monnify computed against the original payload bytes.
+        $stringifiedData = $request->getContent();
         $payload = $request->input('eventData');
-      
+
         $webHookCall = new WebHookCall($payload);
         $webHookCall->transactionHash = $monnifySignature;
         $webHookCall->stringifiedData = $stringifiedData;
 
         $calculatedHash = Monnify::computeRequestValidationHash($stringifiedData);
-//        Log::info("$transactionHash\n\r{$webHookCall->stringifiedData}\n\r$calculatedHash");
         $isValidHash = $calculatedHash == $monnifySignature;
         return $webHookCall;
     }
