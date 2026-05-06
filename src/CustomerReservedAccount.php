@@ -74,8 +74,10 @@ abstract class CustomerReservedAccount
         if ((!is_null($customerName)) && (!empty(trim($customerName))))
             $requestBody['customerName'] = $customerName;
 
-        if ((!is_null($customerBvn)) && (!empty(trim($customerBvn))))
+        if ((!is_null($customerBvn)) && (!empty(trim($customerBvn)))) {
+            $requestBody['bvn'] = $customerBvn;
             $requestBody['customerBvn'] = $customerBvn;
+        }
 
         if (!is_null($allowedPaymentSources))
             $requestBody['allowedPaymentSources'] = $allowedPaymentSources->toArray();
