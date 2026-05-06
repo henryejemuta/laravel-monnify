@@ -1,3 +1,12 @@
+## v1.3.1 - 2026-05-06
+
+## 📦 Uncategorized
+
+- Fix failing customer reserved account generation due to customerBvn now bvn
+   - PR: #16
+
+
+
 ## v1.3.0 - 2026-05-02
 
 ## 📦 Uncategorized
