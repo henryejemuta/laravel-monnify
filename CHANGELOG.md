@@ -1,3 +1,14 @@
+## v1.3.0 - 2026-05-02
+
+## 📦 Uncategorized
+
+- Added  to the Transactions class, …
+   - PR: #14
+- He/fix test
+   - PR: #15
+
+
+
 ## v1.2.3 - 2026-05-02
 
 - no changes
